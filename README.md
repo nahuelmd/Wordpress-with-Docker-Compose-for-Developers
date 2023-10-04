@@ -33,3 +33,11 @@ Este repositorio proporciona una configuración de Docker para levantar un entor
 
 5. **Detener el entorno**:
    - Puedes detener los contenedores en cualquier momento con el comando `docker-compose down`.
+
+## Notas
+
+    - Necesitaras estos datos al momento de configurar wordpress, puedes cambiarlos en el archivo .env del repositorio.
+    - usuario base de datos : root
+    - nombre base de datos: wordpress_db
+    - contraseña base de datos : your_password_1234
+    - host de la base de datos: mysql
