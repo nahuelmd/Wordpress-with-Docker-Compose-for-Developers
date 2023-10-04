@@ -2,7 +2,7 @@
 
 # Paso 1: Descargar WordPress
 echo "Descargando WordPress..."
-wget https://wordpress.org/latest.tar.gz
+curl -O https://wordpress.org/latest.tar.gz
 
 # Paso 2: Descomprimir
 echo "Descomprimiendo archivos..."
