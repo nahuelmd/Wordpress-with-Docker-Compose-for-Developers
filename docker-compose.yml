@@ -1,0 +1,66 @@
+version: "3"
+services:
+  nginx:
+    build:
+      context: .
+      dockerfile: Dockerfile-nginx
+    volumes:
+      - ./wordpress/:/var/www/wordpress/
+    ports:
+      # - "8001:80"
+      - "8002:80"
+    depends_on:
+      - php
+      - mysql
+    networks:
+      - wordpress
+  php:
+    build:
+      context: .
+      dockerfile: Dockerfile-php
+    environment:
+      APP_ENV: dev
+      DATABASE_URL: mysql://root:your_password_1234@mysql:3306/wordpress_db?serverVersion=5.7
+    volumes:
+      - ./wordpress/:/var/www/wordpress/
+      - ../../frontend:/var/www/wordpress/frontend
+    networks:
+      - wordpress
+    depends_on:
+      - mysql
+    command: php-fpm -F
+  mysql:
+    image: mysql
+    # command: --default-authentication-plugin=mysql_native_password
+    command:
+      [
+        "--character-set-server=utf8mb4",
+        "--collation-server=utf8mb4_unicode_ci",
+        "--default-authentication-plugin=mysql_native_password",
+      ]
+    # restart: always
+    environment:
+      MYSQL_DATABASE: wordpress_db
+      MYSQL_USER: todoUser
+      MYQL_PASSWORD: your_password_1234
+      MYSQL_ROOT_PASSWORD: your_password_1234
+    ports:
+      - 3306:3306
+    volumes:
+      - ./mysql:/var/lib/mysql
+    networks:
+      - wordpress
+  phpMyadmin:
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    environment:
+      PMA_HOST: mysql
+      MYSQL_ROOT_PASSWORD: your_password_1234
+    ports:
+      - 8081:80
+    networks:
+      - wordpress
+    depends_on:
+      - mysql
+networks:
+  wordpress:

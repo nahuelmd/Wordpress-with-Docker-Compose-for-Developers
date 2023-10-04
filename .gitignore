@@ -1,0 +1,4 @@
+wordpress/*
+!wordpress/.gitkeep
+mysql/*
+!mysql/.gitkeep

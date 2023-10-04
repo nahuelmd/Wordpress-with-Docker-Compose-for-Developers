@@ -1,0 +1,15 @@
+
+# Utilizar imagen PHP 8.1 con FPM
+FROM php:8.1.0-fpm
+
+# Actualizar e instalar dependencias necesarias y extensiones de PHP
+RUN apt-get update && apt-get install -y     git     iputils-ping     zlib1g-dev     libxml2-dev     libzip-dev     && docker-php-ext-install     zip     intl     mysqli     pdo pdo_mysql
+
+# Soporte UTF
+RUN apt-get clean && apt-get update && apt-get install -y locales
+RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen &&     sed -i -e 's/# es_ES.UTF-8 UTF-8/es_ES.UTF-8 UTF-8/' /etc/locale.gen &&     sed -i -e 's/# ca_ES.UTF-8 UTF-8/ca_ES.UTF-8 UTF-8/' /etc/locale.gen &&     dpkg-reconfigure --frontend=noninteractive locales
+
+ENV LANG en_US.UTF-8 
+
+# Establecer directorio de trabajo
+WORKDIR /var/www/wordpress/
