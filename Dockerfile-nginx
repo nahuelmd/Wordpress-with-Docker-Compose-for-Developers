@@ -1,2 +1,15 @@
+# Usar la imagen de Nginx
 FROM nginx:latest
+
+# Copiar la configuración de Nginx
 COPY ./build/nginx/default.conf /etc/nginx/conf.d/
+
+# Cambiar el propietario de los directorios y archivos relevantes a www-data
+RUN touch /var/run/nginx.pid && \
+    chown -R www-data:www-data /var/run/nginx.pid && \
+    chown -R www-data:www-data /var/cache/nginx && \
+    chown -R www-data:www-data /var/www/wordpress && \
+    chown -R www-data:www-data /var/log/nginx
+
+# Modificar el usuario que ejecuta Nginx a www-data
+CMD ["nginx", "-g", "daemon off;", "-c", "/etc/nginx/nginx.conf", "-u", "www-data"]
