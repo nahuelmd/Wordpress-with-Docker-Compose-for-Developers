@@ -4,6 +4,9 @@ FROM nginx:latest
 # Copiar la configuración de Nginx
 COPY ./build/nginx/default.conf /etc/nginx/conf.d/
 
+# Crear el directorio /var/www/wordpress
+RUN mkdir -p /var/www/wordpress
+
 # Cambiar el propietario de los directorios y archivos relevantes a www-data
 RUN touch /var/run/nginx.pid && \
     chown -R www-data:www-data /var/run/nginx.pid && \
