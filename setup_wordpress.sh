@@ -18,4 +18,4 @@ rm -r latest.tar.gz
 
 # Paso 3: Levantar el entorno Docker
 echo "Levantando el entorno Docker..."
-docker-compose up -d
+docker compose up -d
